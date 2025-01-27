@@ -62,9 +62,7 @@ const animation = () =>
     renderer.render(scene, camera)
     // rotate
     const rotationSpeed = 1
-    triangle.rotation.x elapsedTime * rotationSpeed
-    triangle.rotation.y elapsedTime * rotationSpeed
-    triangle.rotation.z elapsedTime * rotationSpeed
+    
 
     //scale
     triangle.scale.x = Math.sin(elapsedTime)
