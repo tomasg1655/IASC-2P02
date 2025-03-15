@@ -1,55 +1,3 @@
-index.html
-<!DOCTYPE html>
-<head>
-    <title>Dataviz 1</title>
-
-    <!-- css -->
-    <link rel="stylesheet" href="style.css">
-
-    <!-- three.js importmap -->
-    <script type="importmap">
-        {
-          "imports": {
-            "three": "https://ga.jspm.io/npm:three@0.168.0/build/three.module.js",
-            "OrbitControls": "https://ga.jspm.io/npm:three@0.168.0/examples/jsm/controls/OrbitControls.js",
-            "lil-gui": "https://ga.jspm.io/npm:lil-gui@0.19.2/dist/lil-gui.esm.js"
-          }
-        }
-        </script>
-
-    <!-- three.js scene -->
-    <script src="script.js" type="module"></script>
-
-</head>
-<body>
-    <h1>Dataviz 1</h1>
-    <h2><span style="color: orange;">Beetle</span> <span style="color: limegreen;">Lumo</span> <span style="color: yellow;">Lights</span></h2>
-    <canvas class="webgl"></canvas>
-</body>
-
-style.css
-h1, h2 {
-    color: white;
-    text-align: center;
-}
-
-h1 {
-    font-size: 48px;
-}
-
-h2 {
-    font-size: 36px;
-}
-
-.webgl {
-    position: absolute;
-    top: 0;
-    left: 0;
-    outline: none;
-    z-index: -1;
-}
-
-script.js 
 import * as THREE from "three"
 import * as dat from "lil-gui"
 import { OrbitControls } from "OrbitControls"
@@ -230,5 +178,4 @@ const animation = () =>
 }
 
 animation()
-
 
