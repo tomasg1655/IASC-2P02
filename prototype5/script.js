@@ -1,55 +1,3 @@
-index.html
-<!DOCTYPE html>
-<head>
-    <title>Dataviz 1</title>
-
-    <!-- css -->
-    <link rel="stylesheet" href="style.css">
-
-    <!-- three.js importmap -->
-    <script type="importmap">
-        {
-          "imports": {
-            "three": "https://ga.jspm.io/npm:three@0.168.0/build/three.module.js",
-            "OrbitControls": "https://ga.jspm.io/npm:three@0.168.0/examples/jsm/controls/OrbitControls.js",
-            "lil-gui": "https://ga.jspm.io/npm:lil-gui@0.19.2/dist/lil-gui.esm.js"
-          }
-        }
-        </script>
-
-    <!-- three.js scene -->
-    <script src="script.js" type="module"></script>
-
-</head>
-<body>
-    <h1>Dataviz 1</h1>
-    <h2><span style="color: orange;">Beetle</span> <span style="color: limegreen;">Lumo</span> <span style="color: yellow;">Lights</span></h2>
-    <canvas class="webgl"></canvas>
-</body>
-
-style.css
-h1, h2 {
-    color: white;
-    text-align: center;
-}
-
-h1 {
-    font-size: 48px;
-}
-
-h2 {
-    font-size: 36px;
-}
-
-.webgl {
-    position: absolute;
-    top: 0;
-    left: 0;
-    outline: none;
-    z-index: -1;
-}
-
-script.js 
 import * as THREE from "three"
 import * as dat from "lil-gui"
 import { OrbitControls } from "OrbitControls"
@@ -160,20 +108,112 @@ const drawCube = (height, color) =>
 // UI
 const ui = new dat.GUI()
 
+
+let preset ={}
+
+const uiObj = {
+    sourceText: "The quick brown fox jumped over the lazy dog.",
+    saveSourceText() {
+        saveSourceText()
+    },
+    term1: 'fox',
+    color1: '#aa00ff',
+    term2: 'dog',
+    color2: '#00ffaa',
+    term3: '',
+    color3: '',
+    saveTerms() {
+        saveTerms()
+    }
+}
+
+//UI Functions
+const saveSourceText = () =>
+{
+    //Ui
+    preset = ui.save()
+    textFolder.hide()
+    termsFolder.show()
+    visualizeFolder.show()
+
+    //Text Analysis
+    tokenizeSourceText(uiObj.sourceText)
+    //console.log(uiObj.sourceText)
+}
+
+const saveTerms = () =>
+{
+    //Ui
+    preset = ui.save
+    visualizeFolder.hide()
+
+    //Testing
+    
+    //Text Analysis
+    findSearchTermInTokenizedText(uiObj.term1, uiObj.color1)
+    findSearchTermInTokenizedText(uiObj.term2, uiObj.color2)
+    findSearchTermInTokenizedText(uiObj.term3, uiObj.color3)
+
+}
+//Text Folder
+const textFolder = ui.addFolder("Source Text")
+
+textFolder
+    .add(uiObj, 'sourceText')
+    .name("Source Text")
+
+textFolder
+    .add(uiObj, 'saveSourceText')
+    .name("Save")
+
+//Terms and Visualize Folders
+const termsFolder = ui.addFolder("Search Terms")
+const visualizeFolder = ui.addFolder("Visualize")
+
+termsFolder
+    .add(uiObj, 'term1')
+    .name("Term 1")
+
+termsFolder
+    .addColor(uiObj, 'color1')
+    .name("Term 1 Color")
+
+termsFolder
+    .add(uiObj, 'term2')
+    .name("Term 2")
+
+termsFolder
+    .addColor(uiObj, 'color2')
+    .name("Term 2 Color")
+
+termsFolder
+    .add(uiObj, 'term3')
+    .name("Term 3")
+
+termsFolder
+    .addColor(uiObj, 'color3')
+    .name("Term 3 Color")
+
+visualizeFolder
+    .add(uiObj, 'saveTerms')
+    .name("Visualize")
+
+//Terms and Visualize folders are hidden by default
+termsFolder.hide()
+visualizeFolder.hide()
 /******************
 ** TEXT ANALYSIS **
 ******************/
 // SourceText
-const sourceText = "So, there's this cool little beetle named Lumo who can glow different colors based on his mood. When he’s curious, he shines yellow. If he's happy, he’s all green, but when things scare him, he lights up blue. One night, there’s a big storm, and Lumo gets pretty freaked out, glowing blue everywhere. But then he spots another beetle stuck under a branch, and suddenly he feels brave, turning red as he rushes to save the day! After that, the whole forest lights up like a party. Isn’t that awesome?"
 
 // Variables
 let parsedText, tokenizedText
 
 // Parse and Tokenize sourceText
-const tokenizeSourceText = () =>
+const tokenizeSourceText = (sourceText) => 
 {
     // Strip periods and downcase sourceText
-    parsedText = sourceText.replaceAll(".", "").toLowerCase()
+    parsedText = uiObj.sourceText.replaceAll(".", "").toLowerCase()
 
     // Tokenize text
     tokenizedText = parsedText.split(/[^\w']+/)
@@ -201,13 +241,11 @@ const findSearchTermInTokenizedText = (term, color) =>
 
 
 tokenizeSourceText()
-//findSearchTermInTokenizedText("beetle", "orange")
-//findSearchTermInTokenizedText("lumo", "limegreen")
-//findSearchTermInTokenizedText("light", "yellow")
+//findSearchTermInTokenizedText("little", "yellow")
+//findSearchTermInTokenizedText("dog", "pink")
+//findSearchTermInTokenizedText("dogs", "pink")
 
-findSearchTermInTokenizedText("beetle", "orange")
-findSearchTermInTokenizedText("lumo", "limegreen")
-findSearchTermInTokenizedText("lights", "yellow")
+
 
 /*******************
 ** ANIMATION LOOP **
@@ -230,5 +268,4 @@ const animation = () =>
 }
 
 animation()
-
 
