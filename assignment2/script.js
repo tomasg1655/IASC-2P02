@@ -352,7 +352,23 @@ const findSearchTermInTokenizedText = (params) =>
       }
   }
   }
+  const blowUpGroup = (group1, elapsedTime)  => {
+    group1.children.forEach((object) => {
+      const distance = Math.sin(elapsedTime * 1) * 5
+      const direction = new THREE.Vector3(
+        object.position.x,
+        object.position.y,
+        object.position.z
+      ).normalize()
+      //Apply group1 movement
+      object.position.x += direction.x * distance * 1.5
+      object.position.y += direction.y * distance * 1.5
+      object.position.z += direction.z * distance * 1.5
+    })
 
+
+
+  }
 /*********************
 ** Animation Loop **
 *********************/
@@ -366,6 +382,21 @@ const findSearchTermInTokenizedText = (params) =>
       // Update OrbitControls
       controls.update()
 
+      //change sphere color
+      group2.children.forEach((sphere) => {
+        const isPrimaryColor = Math.sin(elapsedTime * 1) > 0
+        const color = isPrimaryColor? "#d8f500" : "#8700f5"
+        sphere.material.color.set(color)
+      
+      })
+      
+      //bouncing torus
+      group3.children.forEach((torusKnot) => {
+        torusKnot.position.y = Math.sin(elapsedTime * 1) *5
+        console.log(group3.children); // Should output an array of objects
+      })
+    
+
       //Rotate Camera
       if(uiObj.rotateCamera)
       {
@@ -374,6 +405,8 @@ const findSearchTermInTokenizedText = (params) =>
         camera.position.y = 13
         camera.lookAt(-1, -3, -1)
       }
+      //group1 blow up
+      blowUpGroup(group1, elapsedTime)
 
       //Renderer
       renderer.render(scene, camera)
