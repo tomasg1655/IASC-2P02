@@ -416,3 +416,4 @@ const findSearchTermInTokenizedText = (params) =>
    }
 
    animation()
+   //finish assignment 2
